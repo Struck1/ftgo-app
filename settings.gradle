@@ -1,0 +1,9 @@
+rootProject.name = 'ftgo-app'
+
+include 'ftgo-common'
+include 'ftgo-consumer-service'
+include 'ftgo-order-service'
+include 'ftgo-kitchen-service'
+include 'ftgo-accounting-service'
+include 'ftgo-delivery-service'
+include 'ftgo-restaurant-service'
