@@ -1,0 +1,20 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: ftgo-consumer-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ftgo?currentSchema=consumer_service
+    username: ftgo
+    password: ftgo
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    schemas: consumer_service
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      acks: all

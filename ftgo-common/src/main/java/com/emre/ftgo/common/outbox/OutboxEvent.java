@@ -12,7 +12,6 @@ public class OutboxEvent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Tüketicinin duplicate tespiti için kullanacağı kimlik. Bir kez üretilir, asla değişmez.
     @Column(name = "event_id", nullable = false, unique = true, updatable = false)
     private UUID eventId;
 
