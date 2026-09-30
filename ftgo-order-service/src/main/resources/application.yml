@@ -1,0 +1,20 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: ftgo-order-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ftgo?currentSchema=order_service
+    username: ftgo
+    password: ftgo
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    schemas: order_service
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      acks: all

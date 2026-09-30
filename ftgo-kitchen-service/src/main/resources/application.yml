@@ -1,0 +1,23 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: ftgo-kitchen-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ftgo?currentSchema=kitchen_service
+    username: ftgo
+    password: ftgo
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    schemas: kitchen_service
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: kitchen-service
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
