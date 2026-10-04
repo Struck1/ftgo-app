@@ -21,6 +21,7 @@ public class OrderService {
         Order order = orderRepository.save(new Order(consumerId, restaurantId, totalAmount));
 
         outboxService.publish(
+                "order-events",
                 "Order",
                 String.valueOf(order.getId()),
                 "OrderCreated",
@@ -28,4 +29,4 @@ public class OrderService {
 
         return order;
     }
-}
+}

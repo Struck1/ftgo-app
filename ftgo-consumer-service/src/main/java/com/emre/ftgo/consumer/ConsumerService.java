@@ -1,8 +1,8 @@
 package com.emre.ftgo.consumer;
 
 import com.emre.ftgo.common.outbox.OutboxService;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ConsumerService {
@@ -19,6 +19,7 @@ public class ConsumerService {
         Consumer consumer = consumerRepository.save(new Consumer(firstName, lastName));
 
         outboxService.publish(
+                "consumer-events",
                 "Consumer",
                 String.valueOf(consumer.getId()),
                 "ConsumerCreated",

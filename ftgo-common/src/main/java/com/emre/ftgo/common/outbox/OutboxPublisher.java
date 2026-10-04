@@ -32,10 +32,8 @@ public class OutboxPublisher {
         List<OutboxEvent> batch = repository.lockNextBatch(BATCH_SIZE);
 
         for (OutboxEvent event : batch) {
-            String topic = event.getAggregateType().toLowerCase() + "-events";
-
             ProducerRecord<String, String> record =
-                    new ProducerRecord<>(topic, event.getAggregateId(), event.getPayload());
+                    new ProducerRecord<>(event.getTopic(), event.getAggregateId(), event.getPayload());
             record.headers().add("eventId", event.getEventId().toString().getBytes(StandardCharsets.UTF_8));
             record.headers().add("eventType", event.getEventType().getBytes(StandardCharsets.UTF_8));
 
@@ -50,4 +48,4 @@ public class OutboxPublisher {
             event.markSent();
         }
     }
-}
+}

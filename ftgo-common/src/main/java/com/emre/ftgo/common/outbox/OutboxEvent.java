@@ -15,6 +15,9 @@ public class OutboxEvent {
     @Column(name = "event_id", nullable = false, unique = true, updatable = false)
     private UUID eventId;
 
+    @Column(nullable = false)
+    private String topic;           // e.g. "order-events"
+
     @Column(name = "aggregate_type", nullable = false)
     private String aggregateType;   // e.g. "Order"
 
@@ -35,8 +38,9 @@ public class OutboxEvent {
 
     protected OutboxEvent() {}      // required by JPA
 
-    public OutboxEvent(String aggregateType, String aggregateId, String eventType, String payload) {
+    public OutboxEvent(String topic, String aggregateType, String aggregateId, String eventType, String payload) {
         this.eventId = UUID.randomUUID();
+        this.topic = topic;
         this.aggregateType = aggregateType;
         this.aggregateId = aggregateId;
         this.eventType = eventType;
@@ -48,10 +52,11 @@ public class OutboxEvent {
 
     public Long getId() { return id; }
     public UUID getEventId() { return eventId; }
+    public String getTopic() { return topic; }
     public String getAggregateType() { return aggregateType; }
     public String getAggregateId() { return aggregateId; }
     public String getEventType() { return eventType; }
     public String getPayload() { return payload; }
     public Instant getCreatedAt() { return createdAt; }
     public Instant getSentAt() { return sentAt; }
-}
+}
