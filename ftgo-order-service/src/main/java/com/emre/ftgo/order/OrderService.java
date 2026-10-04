@@ -9,10 +9,14 @@ import java.math.BigDecimal;
 public class OrderService {
 
     private final OrderRepository orderRepository;
+    private final CreateOrderSagaStateRepository sagaStateRepository;
     private final OutboxService outboxService;
 
-    public OrderService(OrderRepository orderRepository, OutboxService outboxService) {
+    public OrderService(OrderRepository orderRepository,
+                        CreateOrderSagaStateRepository sagaStateRepository,
+                        OutboxService outboxService) {
         this.orderRepository = orderRepository;
+        this.sagaStateRepository = sagaStateRepository;
         this.outboxService = outboxService;
     }
 
@@ -26,6 +30,16 @@ public class OrderService {
                 String.valueOf(order.getId()),
                 "OrderCreated",
                 new OrderCreatedEvent(order.getId(), order.getConsumerId(), order.getRestaurantId(), order.getTotalAmount()));
+
+        // Start the Create Order saga: persist its state and send the first command to Kitchen
+        CreateOrderSagaState saga = sagaStateRepository.save(new CreateOrderSagaState(order.getId()));
+
+        outboxService.publish(
+                "kitchen-commands",
+                "CreateOrderSaga",
+                saga.getSagaId().toString(),
+                "CreateTicket",
+                new CreateTicketCommand(saga.getSagaId(), order.getId(), order.getRestaurantId()));
 
         return order;
     }

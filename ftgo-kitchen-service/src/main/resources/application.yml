@@ -16,6 +16,8 @@ spring:
     schemas: kitchen_service
   kafka:
     bootstrap-servers: localhost:9092
+    producer:
+      acks: all
     consumer:
       group-id: kitchen-service
       auto-offset-reset: earliest
