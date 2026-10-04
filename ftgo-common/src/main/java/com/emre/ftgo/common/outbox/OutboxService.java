@@ -23,7 +23,7 @@ public class OutboxService {
             String json = objectMapper.writeValueAsString(payload);
             repository.save(new OutboxEvent(aggregateType, aggregateId, eventType, json));
         } catch (JsonProcessingException e) {
-            throw new IllegalStateException("Event serialize edilemedi: " + eventType, e);
+            throw new IllegalStateException("Failed to serialize event: " + eventType, e);
         }
     }
 }

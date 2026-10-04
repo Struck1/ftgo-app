@@ -20,7 +20,7 @@ public class Consumer {
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
 
-    protected Consumer() {}   // JPA için
+    protected Consumer() {}   // required by JPA
 
     public Consumer(String firstName, String lastName) {
         this.firstName = firstName;

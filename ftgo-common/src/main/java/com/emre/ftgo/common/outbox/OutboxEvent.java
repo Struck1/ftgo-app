@@ -16,13 +16,13 @@ public class OutboxEvent {
     private UUID eventId;
 
     @Column(name = "aggregate_type", nullable = false)
-    private String aggregateType;   // örn. "Order"
+    private String aggregateType;   // e.g. "Order"
 
     @Column(name = "aggregate_id", nullable = false)
-    private String aggregateId;     // örn. "1345"
+    private String aggregateId;     // e.g. "1345"
 
     @Column(name = "event_type", nullable = false)
-    private String eventType;       // örn. "OrderCreated"
+    private String eventType;       // e.g. "OrderCreated"
 
     @Column(nullable = false, columnDefinition = "text")
     private String payload;         // JSON
@@ -31,9 +31,9 @@ public class OutboxEvent {
     private Instant createdAt;
 
     @Column(name = "sent_at")
-    private Instant sentAt;         // NULL = henüz Kafka'ya gönderilmedi
+    private Instant sentAt;         // NULL = not yet sent to Kafka
 
-    protected OutboxEvent() {}      // JPA için
+    protected OutboxEvent() {}      // required by JPA
 
     public OutboxEvent(String aggregateType, String aggregateId, String eventType, String payload) {
         this.eventId = UUID.randomUUID();

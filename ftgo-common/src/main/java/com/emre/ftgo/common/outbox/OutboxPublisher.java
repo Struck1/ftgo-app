@@ -42,9 +42,9 @@ public class OutboxPublisher {
             try {
                 kafkaTemplate.send(record).get(5, TimeUnit.SECONDS);
             } catch (Exception e) {
-                log.warn("Outbox event {} gönderilemedi, sonraki turda tekrar denenecek: {}",
+                log.warn("Failed to send outbox event {}, will retry in the next poll: {}",
                         event.getEventId(), e.getMessage());
-                return;   // o ana kadar işaretlenenler commit edilir, gerisi tekrar denenir
+                return;   // events marked so far are committed, the rest are retried
             }
 
             event.markSent();
