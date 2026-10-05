@@ -1,0 +1,29 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: ftgo-accounting-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ftgo?currentSchema=accounting_service
+    username: ftgo
+    password: ftgo
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    schemas: accounting_service
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      acks: all
+    consumer:
+      group-id: accounting-service
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+# Simulated payment limit: amounts above this are declined.
+accounting:
+  card-limit: 1000.00

@@ -11,6 +11,7 @@ public class CreateOrderSagaState {
     public enum State {
         CREATING_TICKET,
         AUTHORIZING_CARD,
+        APPROVING_TICKET,
         REJECTING_TICKET,
         ORDER_APPROVED,
         ORDER_REJECTED
